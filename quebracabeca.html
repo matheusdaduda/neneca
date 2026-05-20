@@ -57,9 +57,9 @@
       height: 100%;
       border-radius: 12px;
       cursor: pointer;
-      background-size: 400px 400px;
       border: 2px solid rgba(255,255,255,0.3);
       transition: 0.2s;
+      background-repeat: no-repeat;
     }
 
     .piece:hover {
@@ -137,10 +137,6 @@
         width: 90vw;
         height: 90vw;
       }
-
-      .piece {
-        background-size: calc(90vw - 20px) calc(90vw - 20px);
-      }
     }
   </style>
 </head>
@@ -188,6 +184,8 @@
       pieces = [];
       puzzle.innerHTML = '';
 
+      const pieceSize = puzzle.offsetWidth / 3;
+
       for(let row = 0; row < 3; row++) {
 
         for(let col = 0; col < 3; col++) {
@@ -202,8 +200,11 @@
 
           piece.style.backgroundImage = `url(${image})`;
 
+          piece.style.backgroundSize =
+          `${pieceSize * 3}px ${pieceSize * 3}px`;
+
           piece.style.backgroundPosition =
-          `${-col * 133.33}px ${-row * 133.33}px`;
+          `${-col * pieceSize}px ${-row * pieceSize}px`;
 
           piece.addEventListener('click', selectPiece);
 
@@ -295,6 +296,10 @@
     }
 
     createPuzzle();
+
+    window.addEventListener('resize', () => {
+      createPuzzle();
+    });
 
   </script>
 
