@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>neneca 💗</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffc1dc, #ffd6e7, #ffeaf4);
+    }
+
+    .background-glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+    }
+
+    .glow-1 {
+      background: hotpink;
+      top: -100px;
+      left: -100px;
+    }
+
+    .glow-2 {
+      background: pink;
+      bottom: -100px;
+      right: -100px;
+    }
+
+    .desktop {
+      width: 95%;
+      height: 92vh;
+      margin: 4vh auto;
+      border-radius: 35px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      position: relative;
+    }
+
+    .topbar {
+      height: 60px;
+      background: rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .desktop-area {
+      padding: 40px;
+      position: relative;
+      height: calc(100% - 60px);
+    }
+
+    .icons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 30px;
+      max-width: 700px;
+    }
+
+    .icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .icon:hover {
+      transform: scale(1.05);
+    }
+
+    .icon-box {
+      width: 90px;
+      height: 90px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+
+    .icon span {
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .window {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      width: 340px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    }
+
+    .window-top {
+      height: 45px;
+      background: rgba(255,255,255,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 15px;
+    }
+
+    .circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .red { background: #ff8b8b; }
+    .yellow { background: #ffd66b; }
+    .green { background: #7dff95; }
+
+    .window-content {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .window-content h2 {
+      color: #d63384;
+      margin: 15px 0;
+      font-size: 30px;
+    }
+
+    .window-content p {
+      color: #8a3b63;
+      line-height: 1.6;
+    }
+
+    .window-content button {
+      margin-top: 20px;
+      border: none;
+      background: #ff4fa0;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .window-content button:hover {
+      background: #ff2f91;
+      transform: scale(1.05);
+    }
+
+    .login-screen {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,105,180,0.85), rgba(255,182,193,0.85));
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: 0.5s;
+    }
+
+    .login-box {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 35px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .login-box h1 {
+      color: white;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .login-box p {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 25px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 18px;
+      outline: none;
+      margin-bottom: 15px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.7);
+      color: #d63384;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 18px;
+      background: #ff4fa0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #ff2f91;
+    }
+
+    .heart {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .floating {
+      position: absolute;
+      font-size: 30px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .f1 { top: 100px; left: 100px; }
+    .f2 { top: 200px; right: 150px; }
+    .f3 { bottom: 120px; left: 200px; }
+
+    @keyframes float {
+      0%,100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .window {
+        position: relative;
+        width: 100%;
+        right: auto;
+        bottom: auto;
+        margin-top: 40px;
+      }
+
+      .desktop-area {
+        overflow-y: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-glow glow-1"></div>
+  <div class="background-glow glow-2"></div>
+
+  <div class="desktop">
+
+   
+    <div class="login-screen" id="loginScreen">
+      <div class="login-box">
+        <div class="heart">💗</div>
+
+        <h1>site da duda!</h1>
+
+        <p>
+          acesso restrito a garota mais especial do mundo
+        </p>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="digite o codigo secreto.."
+        />
+
+        <button onclick="login()">
+         logar! 
+        </button>
+
+        <p style="margin-top: 20px; font-size: 13px;">
+          dica: talvez seja uma data importante 
+        </p>
+      </div>
+    </div>
+
+   
+    <div class="topbar">
+      <div>duda.com 💕</div>
+      <div>por: matheus</div>
+    </div>
+
+   
+    <div class="desktop-area">
+
+      <div class="floating f1">💖</div>
+      <div class="floating f2">🌸</div>
+      <div class="floating f3">💌</div>
+
+      <div class="icons">
+
+        <div class="icon">
+          <div class="icon-box">📸</div>
+          <span>fotos LEGAIS</span>
+        </div>
+
+        <div class="icon" onclick ="cartas()">
+          <div class="icon-box">💌</div>
+          <span>cartinhas</span>
+        </div>
+
+        <div class="icon" onclick = "quebra()">
+          <div class="icon-box">🧩</div>
+          <span>quebra cabeça</span>
+        </div>
+
+        
+        <div class="icon" onclick="showLoveTime()">
+          <div class="icon-box">🕰️</div>
+          <span>tempo juntos!</span>
+        </div>
+         <div class="icon">
+          <div class="icon-box">⚙️</div>
+          <span>o site terá atualizações no futuro!</span>
+        </div>
+        
+      </div>
+
+
+      <div class="window">
+        <div class="window-top">
+          <div class="circle red"></div>
+          <div class="circle yellow"></div>
+          <div class="circle green"></div>
+        </div>
+
+        <div class="window-content">
+          <div style="font-size: 60px;">💕</div>
+
+          <h2>oiee neneca</h2>
+
+          <p>
+            espero que tenha gostado da sua propria página, fiz com muito carinho! (pelo menos mais do que algo de comer😭)
+          </p>
+
+          <button>
+           diario da minha paixão
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function quebra() {
+        window.location.href = "https://matheusdaduda.github.io/neneca/quebracabeca.html"
+    }
+    function cartas(){
+
+      window.location.href="https://matheusdaduda.github.io/neneca/cartinhas.html"
+
+    }
+    function login() {
+      const password = document.getElementById('password').value;
+
+      const correctPassword = '2011';
+
+      if(password === correctPassword) {
+        document.getElementById('loginScreen').classList.add('hidden');
+      } else {
+        alert('voce ERRO.');
+      }
+    }
+
+    function showLoveTime() {
+
+     
+      const startDate = new Date('2025-11-20');
+
+      const now = new Date();
+
+      const diff = now - startDate;
+
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      const years = Math.floor(totalDays / 365);
+      const months = Math.floor((totalDays % 365) / 30);
+      const days = totalDays % 30;
+
+      alert(
+`JA ESTAMOS JUNTOS A  :
+
+${years} ANOS E
+${months} MESES E
+${days} DIAS
+
+✨`
+      );
+    }
+  </script>
+
+</body>
+</html>
