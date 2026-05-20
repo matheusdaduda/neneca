@@ -271,19 +271,25 @@
       }
     }
 
-    @media (max-width: 900px) {
-      .window {
-        position: relative;
-        width: 100%;
-        right: auto;
-        bottom: auto;
-        margin-top: 40px;
-      }
+   @media (max-width: 900px) {
 
-      .desktop-area {
-        overflow-y: auto;
-      }
-    }
+  .window {
+    position: relative;
+    width: 100%;
+    right: auto;
+    bottom: auto;
+    margin-top: 40px;
+  }
+
+  .desktop-area {
+    overflow-y: auto;
+  }
+
+  .icons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
   </style>
 </head>
 <body>
