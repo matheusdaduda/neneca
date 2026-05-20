@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -57,18 +56,20 @@
       width: 100%;
       height: 100%;
       border-radius: 12px;
-      cursor: grab;
+      cursor: pointer;
       background-size: 400px 400px;
       border: 2px solid rgba(255,255,255,0.3);
-      transition: transform 0.2s;
+      transition: 0.2s;
     }
 
     .piece:hover {
       transform: scale(1.03);
     }
 
-    .piece.dragging {
-      opacity: 0.5;
+    .piece.selected {
+      transform: scale(0.95);
+      opacity: 0.6;
+      border: 3px solid white;
     }
 
     .message {
@@ -145,8 +146,8 @@
 </head>
 <body>
 
-  <h1>quebra cabeçw🧩</h1>
-  <p>só aqui já tem 300 linhas de codigo </p>
+  <h1>quebra cabeça 🧩</h1>
+  <p>clique em duas peças para trocar de lugar 💗</p>
 
   <div class="puzzle-container" id="puzzle"></div>
 
@@ -172,7 +173,7 @@
   </div>
 
   <script>
-    // TROQUE PELO NOME DA SUA FOTO
+
     const image = 'foto.jpg';
 
     const puzzle = document.getElementById('puzzle');
@@ -180,34 +181,34 @@
     const winScreen = document.getElementById('winScreen');
 
     let pieces = [];
-    let draggedPiece = null;
+    let selectedPiece = null;
 
     function createPuzzle() {
+
       pieces = [];
       puzzle.innerHTML = '';
 
       for(let row = 0; row < 3; row++) {
-        for(let col = 0; col < 3; col++)  {
+
+        for(let col = 0; col < 3; col++) {
 
           const piece = document.createElement('div');
+
           piece.classList.add('piece');
 
           const correctIndex = row * 3 + col;
 
           piece.dataset.correct = correctIndex;
-          piece.dataset.current = correctIndex;
 
           piece.style.backgroundImage = `url(${image})`;
-          piece.style.backgroundPosition = `${-col * 133.33}px ${-row * 133.33}px`;
 
-          piece.draggable = true;
+          piece.style.backgroundPosition =
+          `${-col * 133.33}px ${-row * 133.33}px`;
 
-          piece.addEventListener('dragstart', dragStart);
-          piece.addEventListener('dragover', dragOver);
-          piece.addEventListener('drop', drop);
-          piece.addEventListener('dragend', dragEnd);
+          piece.addEventListener('click', selectPiece);
 
           pieces.push(piece);
+
           puzzle.appendChild(piece);
         }
       }
@@ -216,70 +217,85 @@
     }
 
     function shufflePieces() {
+
       for(let i = pieces.length - 1; i > 0; i--) {
+
         const j = Math.floor(Math.random() * (i + 1));
 
         [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
       }
 
-      puzzle.innerHTML = '';
-
-      pieces.forEach((piece, index) => {
-        piece.dataset.current = index;
-        puzzle.appendChild(piece);
-      });
+      renderPuzzle();
 
       message.textContent = '';
     }
 
-    function dragStart() {
-      draggedPiece = this;
-      this.classList.add('dragging');
-    }
-
-    function dragOver(e) {
-      e.preventDefault();
-    }
-
-    function drop() {
-      if(draggedPiece === this) return;
-
-      const draggedIndex = pieces.indexOf(draggedPiece);
-      const targetIndex = pieces.indexOf(this);
-
-      [pieces[draggedIndex], pieces[targetIndex]] =
-      [pieces[targetIndex], pieces[draggedIndex]];
+    function renderPuzzle() {
 
       puzzle.innerHTML = '';
 
-      pieces.forEach((piece, index) => {
-        piece.dataset.current = index;
+      pieces.forEach(piece => {
         puzzle.appendChild(piece);
       });
-
-      checkWin();
     }
 
-    function dragEnd() {
-      this.classList.remove('dragging');
+    function selectPiece() {
+
+      if(selectedPiece === null) {
+
+        selectedPiece = this;
+
+        this.classList.add('selected');
+
+      } else {
+
+        if(selectedPiece === this) {
+
+          this.classList.remove('selected');
+
+          selectedPiece = null;
+
+          return;
+        }
+
+        const firstIndex = pieces.indexOf(selectedPiece);
+        const secondIndex = pieces.indexOf(this);
+
+        [pieces[firstIndex], pieces[secondIndex]] =
+        [pieces[secondIndex], pieces[firstIndex]];
+
+        selectedPiece.classList.remove('selected');
+
+        selectedPiece = null;
+
+        renderPuzzle();
+
+        checkWin();
+      }
     }
 
     function checkWin() {
+
       const win = pieces.every((piece, index) => {
+
         return Number(piece.dataset.correct) === index;
       });
 
       if(win) {
-        message.textContent = 'PARABENSSS PARABEEEEENSSS';
+
+        message.textContent = 'PARABENSSSS 💖';
+
         winScreen.style.display = 'flex';
       }
     }
 
     function closeWinScreen() {
+
       winScreen.style.display = 'none';
     }
 
     createPuzzle();
+
   </script>
 
 </body>
